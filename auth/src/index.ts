@@ -14,7 +14,7 @@ import mongoose from 'mongoose'
 
 const app = express()
 app.set('trust proxy', true) // trust ingress-nginx proxy
-app.use(cookieSession({ signed: false, secure: false }))
+app.use(cookieSession({ signed: false, secure: true }))
 
 app.use(json())
 app.use(currentUserRouter)
