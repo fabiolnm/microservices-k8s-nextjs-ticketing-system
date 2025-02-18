@@ -1,10 +1,10 @@
 import express, { Request, Response } from 'express'
 import { body } from 'express-validator'
-import jwt from 'jsonwebtoken'
 
 import { User } from '../models/user'
 import { BadRequestError } from '../errors/bad-request-error'
 import { validateRequest } from '../middlewares/validate-request'
+import { jwtToken } from '../services/jwt-token'
 
 const router = express.Router()
 
@@ -32,10 +32,9 @@ router.post(
     const user = User.build({ email, password })
     await user.save()
 
-    const { id } = user
-    req.session = { jwt: jwt.sign({ id, email }, process.env.JWT_KEY!) }
-
+    req.session = jwtToken(user.id, email)
     res.status(201).send(user)
+    return
   }
 )
 

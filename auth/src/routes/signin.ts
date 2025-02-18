@@ -1,6 +1,10 @@
 import express, { Request, Response } from 'express'
 import { body } from 'express-validator'
 import { validateRequest } from '../middlewares/validate-request'
+import { User } from '../models/user'
+import { BadRequestError } from '../errors/bad-request-error'
+import { Password } from '../services/password'
+import { jwtToken } from '../services/jwt-token'
 
 const router = express.Router()
 
@@ -17,8 +21,22 @@ router.post(
       .withMessage('You must supply a password')
   ],
   validateRequest,
-  (req: Request, res: Response) => {
-    res.send('Sign in')
+  async (req: Request, res: Response) => {
+    const { email, password } = req.body
+
+    const user = await User.findOne({ email })
+
+    if (user) {
+      const passwordMatch = await Password.compare(user.password, password)
+      console.log('Password match', passwordMatch)
+      if (passwordMatch) {
+        req.session = jwtToken(user.id, email)
+        res.status(200).send(user)
+        return
+      }
+    }
+
+    throw new BadRequestError('Invalid credentials')
   }
 )
 
