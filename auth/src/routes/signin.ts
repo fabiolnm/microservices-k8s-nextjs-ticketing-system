@@ -28,7 +28,6 @@ router.post(
 
     if (user) {
       const passwordMatch = await Password.compare(user.password, password)
-      console.log('Password match', passwordMatch)
       if (passwordMatch) {
         req.session = jwtToken(user.id, email)
         res.status(200).send(user)
