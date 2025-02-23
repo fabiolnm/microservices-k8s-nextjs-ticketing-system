@@ -11,14 +11,14 @@ export default function SignupPage() {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const response = await fetch('/api/users/signup', {
+    const response = await fetch('/api/users/signin', {
       method: 'POST',
       body: JSON.stringify({ email, password }),
       headers: { 'Content-Type': 'application/json' }
     })
 
     const data = await response.json()
-    if (response.status === 201) {
+    if (response.status === 200) {
       redirect('/')
     } else {
       setErrors(data.errors)
@@ -27,7 +27,7 @@ export default function SignupPage() {
 
   return (
     <form onSubmit={onSubmit}>
-      <h1>Signup</h1>
+      <h1>Signin</h1>
       <ul>
         {errors?.filter(e => !e.field).map(
           e => <li key={e.message}>{e.message}</li>
@@ -51,7 +51,7 @@ export default function SignupPage() {
           )}
         </ul>
       </div>
-      <button>Signup</button>
+      <button>Signin</button>
     </form>
   )
 }
