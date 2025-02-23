@@ -22,11 +22,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "app/**/*.ts"
+          - src: "app/**/*"
             dest: .
-          - src: "app/**/*.tsx"
-            dest: .
-          - src: "lib/**/*.ts"
-            dest: .
-          - src: "lib/**/*.tsx"
+          - src: "lib/**/*"
             dest: .

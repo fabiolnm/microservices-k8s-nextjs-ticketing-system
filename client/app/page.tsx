@@ -1,13 +1,16 @@
-import axiosClient from "@/lib/axios-client"
+import { getCurrentUser } from "./auth/actions"
+import PageWithAppBar from "./page-with-app-bar"
 
 export default async function Home() {
-  const client = await axiosClient()
-  const { data: { currentUser } } = await client.get('/api/users/currentuser')
+  const currentUser = await getCurrentUser()
+
   return (
-    <h1>
-      {!currentUser
-        ? 'Not signed in'
-        : <>Current user: {currentUser?.email}</>}
-    </h1>
+    <PageWithAppBar>
+      <h1>
+        {!currentUser
+          ? 'Not signed in'
+          : <>Current user: {currentUser?.email}</>}
+      </h1>
+    </PageWithAppBar>
   )
 }
