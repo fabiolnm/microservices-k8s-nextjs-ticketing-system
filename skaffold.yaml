@@ -26,3 +26,11 @@ build:
             dest: .
           - src: "lib/**/*"
             dest: .
+    - image: fabiolnm/ticketing-tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
