@@ -1,6 +1,6 @@
 import express from 'express'
-import { currentUser } from '../middlewares/current-user'
-import { requireAuth } from '../middlewares/require-auth'
+import { currentUser } from '@miranti/ticketing-common'
+import { requireAuth } from '@miranti/ticketing-common'
 
 const router = express.Router()
 
