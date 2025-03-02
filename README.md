@@ -38,3 +38,40 @@ docker system prune -af
 
 kubectl rollout restart deployment auth-depl
 ```
+
+#### MongoDB Memory Server
+```
+pnpm install -g mongodb-memory-server
+Packages: +44
+++++++++++++++++++++++++++++++++++++++++++++
+Progress: resolved 45, reused 41, downloaded 4, added 44, done
+ WARN  mongodb-memory-server has no binaries
+
+~/Library/pnpm/global/5:
++ mongodb-memory-server 10.1.4
+
+╭ Warning ──────────────────────────────────────────────────────────────────────────────────────╮
+│                                                                                               │
+│   Ignored build scripts: mongodb-memory-server.                                               │
+│   Run "pnpm approve-builds -g" to pick which dependencies should be allowed to run scripts.   │
+│                                                                                               │
+╰───────────────────────────────────────────────────────────────────────────────────────────────╯
+
+Done in 1.4s
+
+% pnpm approve-builds -g
+✔ Choose which packages to build (Press <space> to select, <a> to toggle all, <i> to invert selection) · mongodb-memory-server
+✔ The next packages will now be built: mongodb-memory-server.
+Do you approve? (y/N) · true
+.pnpm/mongodb-memory-server@10.1.4/node_modules/mongodb-memory-server: Running postinstall script, done in 97ms
+```
+
+#### Note
+I this error happens
+> console.warn Starting the MongoMemoryServer Instance failed, enable debug log for more information. Error: Error: spawn Unknown system error -88 at ChildProcess.spawn (node:internal/child_process:421:11) at spawn (node:child_process:760:9) at MongoInstance._launchMongod
+
+Try to install it globally:
+```
+pnpm install mongodb-memory-server-global
+pnpm approve-builds
+```
