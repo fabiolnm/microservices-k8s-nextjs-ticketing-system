@@ -1,9 +1,8 @@
 import { AckPolicy, connect } from 'nats'
+import { connectionOptions } from './connection-options'
 
 async function getConsumer() {
-  const nc = await connect({
-    servers: 'localhost:4222', name: 'ticket-subscriber'
-  })
+  const nc = await connect({ ...connectionOptions, name: 'ticket-subscriber' })
 
   const stream = 'ticket'
   const durable_name = 'tickets-stream'
