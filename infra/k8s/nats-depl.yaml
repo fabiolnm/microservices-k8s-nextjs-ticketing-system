@@ -17,6 +17,8 @@ spec:
           image: nats:latest
           args:
             - "--jetstream"
+            - "-m"
+            - "8222"
 ---
 apiVersion: v1
 kind: Service

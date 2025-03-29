@@ -11,3 +11,4 @@ kubectl config current-context
 # Port-forwarding to test the NATS server
 # kubectl get pods
 # kubectl port-forward nats-depl-ID 4222:4222 (video 298)
+# kubectl port-forward nats-depl-859ddff97c-mx6g8 4222:4222 8222:8222 (Video 306)

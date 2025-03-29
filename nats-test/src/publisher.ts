@@ -14,7 +14,9 @@ import { connect } from 'nats'
  * kubectl port-forward --namespace nats nats-0 4222:4222
  */
 async function run() {
-  const nc = await connect({ servers: 'localhost:4222' })
+  const nc = await connect({
+    servers: 'localhost:4222', name: 'ticket-publisher'
+  })
 
   // https://github.com/nats-io/nats.js/blob/main/jetstream/README.md#jetstreammanager-jsm
   const stream = 'ticket'
