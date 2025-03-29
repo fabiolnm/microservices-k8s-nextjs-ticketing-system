@@ -15,7 +15,7 @@ async function getConsumer() {
     const jsm = await nc.jetstreamManager()
     const consumerInfo = await jsm.consumers.add(stream, {
       durable_name,
-      ack_policy: AckPolicy.None,
+      ack_policy: AckPolicy.Explicit,
     })
     console.log('Created:', { consumerInfo })
     consumer = await js.consumers.get(stream, durable_name)
@@ -32,6 +32,7 @@ async function run() {
       const { subject, seq } = msg
       const json = msg.json()
       console.log('Received', { seq, subject, json })
+      msg.ack()
     }
   })
   console.log('Started processing messages...')
