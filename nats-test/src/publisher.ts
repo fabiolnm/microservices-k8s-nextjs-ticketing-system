@@ -16,11 +16,22 @@ import { connect } from 'nats'
 async function run() {
   const nc = await connect({ servers: 'localhost:4222' })
 
-  nc.publish(
+  // https://github.com/nats-io/nats.js/blob/main/jetstream/README.md#jetstreammanager-jsm
+  const stream = 'ticket'
+  const jsm = await nc.jetstreamManager()
+  jsm.streams.add({ name: stream, subjects: [`${stream}.*`] })
+  // await jsm.streams.delete(stream)
+
+  // list all consumers for a stream:
+  // const consumers = await jsm.consumers.list(stream).next()
+  // console.log({ consumers })
+
+  const js = nc.jetstream()
+  const event = await js.publish(
     'ticket.created',
     JSON.stringify({ id: '123', title: 'concert', price: 20 })
   )
-  console.log('Event published')
+  console.log('Published', { event })
 }
 
 console.clear()
