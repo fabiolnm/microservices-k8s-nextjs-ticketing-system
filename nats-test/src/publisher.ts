@@ -1,6 +1,7 @@
 import { connect } from 'nats'
 import { connectionOptions } from './connection-options'
 import { TicketCreatedPublisher } from './events/ticket-created-publisher'
+import { TicketUpdatedPublisher } from './events/ticket-updated-publisher'
 
 /*
  * Videos 297 and 298
@@ -32,10 +33,18 @@ async function createStream() {
 }
 
 console.clear()
-createStream().then((client) => {
-  new TicketCreatedPublisher(client).publish({
+createStream().then(async (client) => {
+  // Publish ticket created event
+  await new TicketCreatedPublisher(client).publish({
     id: '123',
     title: 'concert',
     price: 20,
+  })
+
+  // Publish ticket updated event
+  await new TicketUpdatedPublisher(client).publish({
+    id: '123',
+    title: 'concert updated',
+    price: 30,
   })
 }).catch(console.error)
