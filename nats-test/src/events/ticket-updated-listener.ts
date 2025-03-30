@@ -1,7 +1,5 @@
 import { JsMsg } from 'nats'
-import { Listener } from './base-listener'
-import { TicketUpdatedEvent } from './ticket-updated-event'
-import { Subjects } from './subjects'
+import { Listener, TicketUpdatedEvent, Subjects } from '@miranti/ticketing-common'
 
 export class TicketUpdatedListener extends Listener<TicketUpdatedEvent> {
   readonly subject = Subjects.TicketUpdated

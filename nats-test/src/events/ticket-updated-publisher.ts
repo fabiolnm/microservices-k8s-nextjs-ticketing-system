@@ -1,6 +1,4 @@
-import { Publisher } from "./base-publisher";
-import { Subjects } from "./subjects";
-import { TicketUpdatedEvent } from "./ticket-updated-event";
+import { Publisher, TicketUpdatedEvent, Subjects } from '@miranti/ticketing-common'
 
 export class TicketUpdatedPublisher extends Publisher<TicketUpdatedEvent> {
   readonly subject = Subjects.TicketUpdated
