@@ -1,10 +1,5 @@
 import { AckPolicy, JsMsg, NatsConnection } from 'nats'
-import { Subjects } from './subjects'
-
-interface Event {
-  subject: Subjects
-  data: any
-}
+import { Event } from './base-event'
 
 export abstract class Listener<T extends Event> {
   private readonly client: NatsConnection

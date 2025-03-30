@@ -1,5 +1,6 @@
 import { connect } from 'nats'
 import { connectionOptions } from './connection-options'
+import { TicketCreatedPublisher } from './events/ticket-created-publisher'
 
 /*
  * Videos 297 and 298
@@ -14,7 +15,7 @@ import { connectionOptions } from './connection-options'
  * Copilot: if nats k8s type is changed from Deployment to StatefulSet:
  * kubectl port-forward --namespace nats nats-0 4222:4222
  */
-async function run() {
+async function createStream() {
   const nc = await connect({ ...connectionOptions, name: 'ticket-publisher' })
 
   // https://github.com/nats-io/nats.js/blob/main/jetstream/README.md#jetstreammanager-jsm
@@ -27,13 +28,14 @@ async function run() {
   // const consumers = await jsm.consumers.list(stream).next()
   // console.log({ consumers })
 
-  const js = nc.jetstream()
-  const event = await js.publish(
-    'ticket.created',
-    JSON.stringify({ id: '123', title: 'concert', price: 20 })
-  )
-  console.log('Published', { event })
+  return nc.jetstream()
 }
 
 console.clear()
-run().catch(console.error)
+createStream().then((client) => {
+  new TicketCreatedPublisher(client).publish({
+    id: '123',
+    title: 'concert',
+    price: 20,
+  })
+}).catch(console.error)
