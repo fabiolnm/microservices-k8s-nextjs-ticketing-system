@@ -1,11 +1,17 @@
 import { AckPolicy, JsMsg, NatsConnection } from 'nats'
+import { Subjects } from './subjects'
 
-export abstract class Listener {
+interface Event {
+  subject: Subjects
+  data: any
+}
+
+export abstract class Listener<T extends Event> {
   private readonly client: NatsConnection
 
   abstract name: string
-  abstract subject: string
-  abstract onMessage(data: any, msg: JsMsg): void
+  abstract subject: T['subject']
+  abstract onMessage(data: T['data'], msg: JsMsg): void
 
   constructor(client: NatsConnection) {
     this.client = client
