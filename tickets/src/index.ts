@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import { app } from './app'
+import { natsWrapper } from './nats-wrapper'
 
 async function start() {
   if (!process.env.JWT_KEY) {
@@ -8,8 +9,8 @@ async function start() {
   if (!process.env.MONGO_URI) {
     throw new Error('MONGO_URI must be defined')
   }
-
   try {
+    await natsWrapper.connect('ticket', 'nats-srv:4222')
     await mongoose.connect(process.env.MONGO_URI)
     console.log('Connected to MongoDB')
   } catch (err) {
